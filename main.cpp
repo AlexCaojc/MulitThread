@@ -1,5 +1,6 @@
 #include <iostream>
 #include <thread>
+#include <string>
 
 void function_1()
 {
@@ -9,30 +10,20 @@ void function_1()
 class Factor
 {
 public:
-    void operator() ()
+    void operator() (std::string &msg)
     {
-        for (int i = 0; i > -100; i--)
-            std::cout << "from t1: " << i << std::endl;
+        std::cout << "from t1: " << msg << std::endl;
+        msg = "i love XuHuanDaXue";
     }
 };
 
 int main()
 {
-//    Factor fct;
-//    std::thread t1(fct);///使用对象创建线程,t1和主线程交互运行
-    std::thread t1((Factor()));
-    try
-    {
-        for (int i = 0; i <100; i++)
-        {
-            std::cout << "from main:" << i << std::endl;
-        }
-    }
-    catch (...)
-    {
-        t1.join();
-        throw;
-    }
+    ///在不同线程中传递数据采用的是值传递，即使函数参数为引用形式
+    std::string s = "i love www.oxox.work";
+    std::thread t1((Factor()), s);
+
     t1.join();
+    std::cout << "from main:" << s << std::endl;
     return 0;
 }
