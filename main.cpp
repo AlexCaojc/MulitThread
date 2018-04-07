@@ -25,5 +25,6 @@ int main()
     std::cout << "the t2 id = " << t2.get_id() << std::endl;
 
     t2.join();
+    std::cout << "the most cpu core num = " << std::thread::hardware_concurrency() << std::endl;
     return 0;
 }
