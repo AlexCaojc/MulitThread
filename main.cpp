@@ -17,6 +17,7 @@ void shared_print(std::string msg, int id)
     /// 利用"栈资源会在相应object的生命周期结束时自动销毁"来自动释放资源，
     /// 即将资源释放写在析构函数中。所以这个RAII其实就是和智能指针的实现是类似的
     std::lock_guard<std::mutex> guard(mu);
+    ///但是cout资源并没有完全在互斥对象的保护下，因为cout是一个全局对象，其他程序仍然可以在不加锁的情况下使用cout
     std::cout << msg << id << std::endl;
 }
 
